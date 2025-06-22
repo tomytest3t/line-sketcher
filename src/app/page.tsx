@@ -48,7 +48,7 @@ export default function Home() {
     // Check if API key is available (optional check since we have server-side fallback)
     const apiKey = localStorage.getItem("replicate_api_key");
     if (!apiKey) {
-      toast.info("使用内置 API Key 进行处理...");
+      toast.info("✨ 使用内置魔法进行处理...");
     }
 
     setIsProcessing(true);
@@ -89,7 +89,7 @@ export default function Home() {
         console.error("Error processing image:", error);
         result.status = "error";
         result.error = error instanceof Error ? error.message : "处理失败";
-        toast.error(`图片 "${image.name}" 处理失败：${result.error}`);
+        toast.error(`😢 图片 "${image.name}" 处理失败：${result.error}`);
       }
 
       setResults([...processedResults]);
@@ -108,7 +108,7 @@ export default function Home() {
       return await processor.generateLineArt(originalUrl, params);
     } catch (error) {
       console.error("Error generating line art:", error);
-      toast.error("线稿生成失败，请重试");
+      toast.error("😢 线稿生成失败，请重试");
       return originalUrl; // Fallback to original image
     }
   };
@@ -140,13 +140,19 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-yellow-50 to-blue-50 relative overflow-hidden">
+      {/* 装饰性背景元素 */}
+      <div className="absolute top-20 left-10 text-4xl opacity-20 floating">🎈</div>
+      <div className="absolute top-40 right-20 text-3xl opacity-20 floating" style={{animationDelay: '1s'}}>🎪</div>
+      <div className="absolute bottom-40 left-20 text-3xl opacity-20 floating" style={{animationDelay: '2s'}}>🎭</div>
+      <div className="absolute bottom-20 right-10 text-4xl opacity-20 floating" style={{animationDelay: '0.5s'}}>🎨</div>
+      
       <Header onNewUpload={handleNewUpload} />
 
-      <main className="container mx-auto px-4 py-6">
+      <main className="container mx-auto px-4 py-8 relative z-10">
         {currentView === "upload" ? (
           <>
-            <div className="max-w-sm md:max-w-4xl mx-auto space-y-6">
+            <div className="max-w-sm md:max-w-4xl mx-auto space-y-8">
               <Dropzone
                 onImagesUploaded={handleImagesUploaded}
                 uploadedImages={uploadedImages}

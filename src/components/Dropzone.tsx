@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import type { UploadedImage } from "@/types";
-import { Camera, Upload, X } from "lucide-react";
+import { Camera, Upload, X, Heart, Star, Palette } from "lucide-react";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 
@@ -68,7 +68,7 @@ export default function Dropzone({
       }
 
       onImagesUploaded([...uploadedImages, ...newImages]);
-      toast.success(`成功上传 ${newImages.length} 张图片！`);
+      toast.success(`🎉 成功上传 ${newImages.length} 张图片！`);
     },
     [uploadedImages, onImagesUploaded, validateFile],
   );
@@ -101,10 +101,10 @@ export default function Dropzone({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {uploadedImages.length === 0 ? (
         <div
-          className={`dropzone relative min-h-[400px] rounded-lg flex flex-col items-center justify-center p-8 cursor-pointer ${
+          className={`dropzone relative min-h-[450px] rounded-3xl flex flex-col items-center justify-center p-8 cursor-pointer sparkle ${
             isDragOver ? "dragover" : ""
           }`}
           onDrop={handleDrop}
@@ -115,28 +115,60 @@ export default function Dropzone({
           onDragLeave={() => setIsDragOver(false)}
           onClick={() => document.getElementById("file-input")?.click()}
         >
-          <div className="text-center space-y-4">
-            <div className="mx-auto w-16 h-16 text-gray-400 mb-4">
-              <Camera size={64} />
+          {/* 装饰性元素 */}
+          <div className="absolute top-4 left-4 text-2xl">🌈</div>
+          <div className="absolute top-4 right-4 text-2xl">🎨</div>
+          <div className="absolute bottom-4 left-4 text-2xl">⭐</div>
+          <div className="absolute bottom-4 right-4 text-2xl">💖</div>
+
+          <div className="text-center space-y-6">
+            <div className="mx-auto w-20 h-20 text-pink-400 mb-6 floating">
+              <Camera size={80} />
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 leading-tight">
-              用色彩点亮童心，简笔画涂色
-            </h1>
+            <div className="space-y-4">
+              <h1 className="text-4xl md:text-5xl font-bold rainbow-text mb-4 leading-tight">
+                🎨 小画家的魔法工坊 ✨
+              </h1>
 
-            <p className="text-lg text-gray-700 mb-4 font-medium">
-              让孩子更专注、更自信、更有创造力！
-            </p>
+              <div className="flex items-center justify-center space-x-2 mb-4">
+                <Heart className="w-6 h-6 text-red-400 floating" />
+                <p className="text-xl text-pink-600 font-semibold">
+                  让每个孩子都成为小艺术家！
+                </p>
+                <Star className="w-6 h-6 text-yellow-400 floating" />
+              </div>
 
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">
-              将你的照片变成线稿
-            </h2>
+              <p className="text-lg text-gray-700 mb-6 font-medium max-w-2xl mx-auto">
+                🌟 把照片变成可爱的线稿，让宝贝们尽情发挥想象力，创作出独一无二的彩色世界！
+              </p>
 
-            <p className="text-gray-600 mb-4">拖放图片到这里，或点击选择文件</p>
+              <div className="bg-gradient-to-r from-pink-100 to-yellow-100 rounded-2xl p-4 mb-6">
+                <h2 className="text-2xl font-bold text-pink-700 mb-3 flex items-center justify-center">
+                  <Palette className="w-6 h-6 mr-2" />
+                  照片变线稿魔法
+                </h2>
+                <p className="text-gray-600 mb-4">把照片拖到这里，或者点击选择文件</p>
+                <p className="text-sm text-gray-500">
+                  ✨ 支持 JPG, PNG, WEBP格式 ✨ 单张不超过10MB
+                </p>
+              </div>
 
-            <p className="text-sm text-gray-500">
-              支持 JPG, PNG, WEBP格式, 单张不超过10MB
-            </p>
+              <div className="flex items-center justify-center space-x-4 text-sm text-gray-500">
+                <span className="flex items-center">
+                  <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
+                  简单易用
+                </span>
+                <span className="flex items-center">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
+                  安全可靠
+                </span>
+                <span className="flex items-center">
+                  <span className="w-2 h-2 bg-purple-400 rounded-full mr-2"></span>
+                  创意无限
+                </span>
+              </div>
+            </div>
           </div>
 
           <input
@@ -149,18 +181,23 @@ export default function Dropzone({
           />
         </div>
       ) : (
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="space-y-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-pink-600 mb-2">🎉 已选择的照片</h2>
+            <p className="text-gray-600">准备开始魔法转换吧！</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {uploadedImages.map((image) => (
-              <Card key={image.id} className="p-4 relative fade-in">
+              <Card key={image.id} className="cute-card p-4 relative bounce-in">
                 <button
                   onClick={() => onImageRemove(image.id)}
-                  className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors z-10"
+                  className="absolute top-3 right-3 w-8 h-8 bg-red-400 hover:bg-red-500 text-white rounded-full flex items-center justify-center transition-colors z-10 shadow-lg"
                 >
-                  <X size={14} />
+                  <X size={16} />
                 </button>
 
-                <div className="aspect-square rounded-lg overflow-hidden mb-3">
+                <div className="aspect-square rounded-2xl overflow-hidden mb-4 border-2 border-pink-200">
                   <img
                     src={image.dataUrl}
                     alt={image.name}
@@ -168,12 +205,12 @@ export default function Dropzone({
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-gray-900 truncate">
-                    {image.name}
+                <div className="space-y-2">
+                  <p className="text-sm font-semibold text-gray-900 truncate">
+                    📸 {image.name}
                   </p>
                   <p className="text-xs text-gray-500">
-                    {formatFileSize(image.size)}
+                    📏 {formatFileSize(image.size)}
                   </p>
                 </div>
               </Card>
@@ -181,7 +218,7 @@ export default function Dropzone({
           </div>
 
           <div
-            className="dropzone min-h-[120px] rounded-lg flex items-center justify-center p-6 cursor-pointer"
+            className="dropzone min-h-[120px] rounded-2xl flex items-center justify-center p-6 cursor-pointer"
             onDrop={handleDrop}
             onDragOver={(e) => {
               e.preventDefault();
@@ -193,8 +230,8 @@ export default function Dropzone({
             }
           >
             <div className="text-center">
-              <Upload className="mx-auto w-8 h-8 text-gray-400 mb-2" />
-              <p className="text-sm text-gray-600">添加更多图片</p>
+              <Upload className="mx-auto w-8 h-8 text-pink-400 mb-2 floating" />
+              <p className="text-sm text-pink-600 font-medium">➕ 添加更多照片</p>
             </div>
 
             <input
